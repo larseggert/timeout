@@ -28,7 +28,7 @@
 
 #include <stdbool.h>    /* bool */
 #include <stdio.h>      /* FILE */
-
+#include <stdint.h>
 #include <inttypes.h>   /* PRIu64 PRIx64 PRIX64 uint64_t */
 
 #include <sys/queue.h>  /* TAILQ(3) */
@@ -115,6 +115,8 @@ struct timeout_cb {
 struct timeout {
 	int flags;
 
+    uint8_t _unused[4];
+
 	timeout_t expires;
 	/* absolute expiration time */
 
@@ -147,7 +149,7 @@ TIMEOUT_PUBLIC struct timeout *timeout_init(struct timeout *, int);
 #ifndef TIMEOUT_DISABLE_RELATIVE_ACCESS
 TIMEOUT_PUBLIC bool timeout_pending(struct timeout *);
 /* true if on timing wheel, false otherwise */
- 
+
 TIMEOUT_PUBLIC bool timeout_expired(struct timeout *);
 /* true if on expired queue, false otherwise */
 
@@ -239,7 +241,7 @@ TIMEOUT_PUBLIC struct timeout *timeouts_next(struct timeouts *, struct timeouts_
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include <math.h> /* ceil(3) */
+// #include <math.h> /* ceil(3) */
 
 #define timeouts_f2i(T, f) \
 	((timeout_t)ceil((f) * timeouts_hz((T)))) /* prefer late expiration over early */
