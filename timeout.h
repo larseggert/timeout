@@ -90,7 +90,10 @@ typedef uint64_t timeout_t;
 
 #ifndef TIMEOUT_CB_OVERRIDE
 struct timeout_cb {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wstrict-prototypes"
 	void (*fn)();
+#pragma clang diagnostic pop
 	void *arg;
 }; /* struct timeout_cb */
 #endif
