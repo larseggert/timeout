@@ -177,21 +177,29 @@ typedef uint8_t wheel_t;
 #endif
 
 
-static inline wheel_t __attribute__((no_sanitize("integer")))
-rotl(const wheel_t v, wheel_t c) {
-	if (!(c &= (sizeof v * CHAR_BIT - 1)))
-		return v;
+static inline wheel_t
+#if defined(__clang__)
+__attribute__((no_sanitize("integer")))
+#endif
+rotl(const wheel_t v, wheel_t c)
+{
+    if (!(c &= (sizeof v * CHAR_BIT - 1)))
+        return v;
 
-	return (v << c) | (v >> (sizeof v * CHAR_BIT - c));
+    return (v << c) | (v >> (sizeof v * CHAR_BIT - c));
 } /* rotl() */
 
 
-static inline wheel_t __attribute__((no_sanitize("integer")))
-rotr(const wheel_t v, wheel_t c) {
-	if (!(c &= (sizeof v * CHAR_BIT - 1)))
-		return v;
+static inline wheel_t
+#if defined(__clang__)
+__attribute__((no_sanitize("integer")))
+#endif
+rotr(const wheel_t v, wheel_t c)
+{
+    if (!(c &= (sizeof v * CHAR_BIT - 1)))
+        return v;
 
-	return (v >> c) | (v << (sizeof v * CHAR_BIT - c));
+    return (v >> c) | (v << (sizeof v * CHAR_BIT - c));
 } /* rotr() */
 
 
