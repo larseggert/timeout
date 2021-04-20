@@ -124,7 +124,7 @@
 #define WHEEL_NUM 4
 #endif
 
-#define WHEEL_LEN (1U << WHEEL_BIT)
+#define WHEEL_LEN (1ULL << WHEEL_BIT)
 #define WHEEL_MAX (WHEEL_LEN - 1)
 #define WHEEL_MASK (WHEEL_LEN - 1)
 #define TIMEOUT_MAX ((TIMEOUT_C(1) << (WHEEL_BIT * WHEEL_NUM)) - 1)
@@ -177,7 +177,8 @@ typedef uint8_t wheel_t;
 #endif
 
 
-static inline wheel_t rotl(const wheel_t v, wheel_t c) {
+static inline wheel_t __attribute__((no_sanitize("integer")))
+rotl(const wheel_t v, wheel_t c) {
 	if (!(c &= (sizeof v * CHAR_BIT - 1)))
 		return v;
 
@@ -185,7 +186,8 @@ static inline wheel_t rotl(const wheel_t v, wheel_t c) {
 } /* rotl() */
 
 
-static inline wheel_t rotr(const wheel_t v, wheel_t c) {
+static inline wheel_t __attribute__((no_sanitize("integer")))
+rotr(const wheel_t v, wheel_t c) {
 	if (!(c &= (sizeof v * CHAR_BIT - 1)))
 		return v;
 
